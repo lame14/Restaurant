@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню ресторану</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+
+        /* HEADER */
+        header {
+            background-color: #0f0f0f;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 38px;
+            color: #ffc400;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 18px 0;
+            background-color: #0f0f0f;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #ffc400;
+            padding: 10px 22px;
+            border: 2px solid #ffc400;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #ffc400;
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+
+        .section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            margin-bottom: 25px;
+            color: #ffc400;
+        }
+
+        /* FILTER BUTTONS */
+        .filter-buttons {
+            margin-bottom: 35px;
+        }
+
+        .filter-buttons button {
+            background-color: #0f0f0f;
+            color: #ffc400;
+            border: 2px solid #ffc400;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 8px 10px 8px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-buttons button:hover,
+        .filter-buttons button.active {
+            background-color: #ffc400;
+            color: #000;
+        }
+
+        /* GRID */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* CARD */
+        .card {
+            background-color: #111;
+            border-radius: 18px;
+            border: 2px solid #ffc400;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            height: 440px;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.6);
+        }
+
+        /* IMAGE WRAPPER — идеально под рамку */
+        .image-wrapper {
+            width: 100%;
+            height: 200px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid #ffc400;
+            overflow: hidden;
+            border-radius: 18px 18px 0 0; /* скругление верхних углов */
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;    /* изображение обрезается по размеру блока */
+            object-position: center; /* центрируем изображение */
+            display: block;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h3 {
+            margin: 0 0 8px;
+            font-size: 22px;
+            color: #ffc400;
+        }
+
+        .category {
+            font-size: 13px;
+            color: #d8b800;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffc400;
+        }
+
+        .empty {
+            font-size: 18px;
+            color: #bbb;
+        }
+
+        /* ADAPTIVE */
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 28px;
+            }
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Меню ресторану</h1>
+</header>
+
+<nav>
+    <a href="{% url 'booking:home' %}">Головна</a>
+    <a href="{% url 'booking:menu' %}">Меню</a>
+    <a href="{% url 'booking:booking' %}">Бронювання</a>
+</nav>
+
+<div class="section">
+    <h2>Наші страви</h2>
+
+    <div class="filter-buttons">
+        <button class="active" data-filter="all">Всі</button>
+        <button data-filter="main">Основні страви</button>
+        <button data-filter="salad">Салати</button>
+        <button data-filter="soup">Супи</button>
+        <button data-filter="dessert">Десерти</button>
+        <button data-filter="drink">Напої</button>
+    </div>
+
+    {% if items %}
+        <div class="cards">
+            {% for item in items %}
+                <div class="card" data-category="{{ item.category }}">
+                    <div class="image-wrapper">
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/400x300?text=Food" alt="Food">
+                        {% endif %}
+                    </div>
+
+                    <div class="card-content">
+                        <div>
+                            <h3>{{ item.title }}</h3>
+                            <div class="category">{{ item.get_category_display }}</div>
+                            {% if item.description %}
+                                <p>{{ item.description }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="price">{{ item.price }} грн</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty">Меню поки що порожнє.</p>
+    {% endif %}
+</div>
+
+<script>
+    const filterButtons = document.querySelectorAll('.filter-buttons button');
+    const cards = document.querySelectorAll('.card');
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // снять активный класс со всех кнопок
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.getAttribute('data-filter');
+            cards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

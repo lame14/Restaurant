@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Sky Food</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f0f0f;
+            color: #fff;
+        }
+
+        header {
+            background-color: #0f0f0f;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Ласкаво просимо */
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            color: #ffc400;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px 0;
+            background-color: #0f0f0f;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #ffc400;
+            padding: 10px 20px;
+            border: 2px solid #ffc400;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #ffc400;
+            color: #000000;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .banner {
+            background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092') center/cover no-repeat;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffc400;
+            font-size: 40px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        .section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        /* Популярні страви */
+        .section h2 {
+            color: #ffc400;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            border: 2px solid #ffc400;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #111;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        /* Названия блюд */
+        .card h3 {
+            margin: 10px;
+            color: #ffc400;
+        }
+
+        .card p {
+            margin: 10px;
+            font-size: 14px;
+            color: #d8b800;
+        }
+
+        /* Карта */
+        .map-container {
+            margin: 30px auto 50px auto; /* смещаем выше */
+            text-align: center;
+        }
+
+        .map-container h2 {
+            color: #ffc400;
+            margin-bottom: 15px;
+        }
+
+        .map-container iframe {
+            border: 2px solid #ffc400;
+            border-radius: 10px;
+            width: 450px;
+            height: 300px;
+        }
+
+        /* Футер */
+        footer {
+            background-color: #0f0f0f;
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #ffc400;
+            font-size: 14px;
+            color: #d8b800;
+        }
+
+        @media (max-width: 900px) {
+            .cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .map-container iframe {
+                width: 90%;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Ласкаво просимо до Sky Food!</h1>
+</header>
+
+<nav>
+    <a href="/">Головна</a>
+    <a href="/menu/">Меню</a>
+    <a href="/booking/">Бронювання</a>
+    <a href="/reviews/">Відгуки</a>
+</nav>
+
+<div class="banner">
+    Спробуйте найкращі страви у місті!
+</div>
+
+<div class="section">
+    <h2>Популярні страви</h2>
+
+    <div class="cards">
+        <div class="card">
+            <img src="https://lviv.veteranopizza.com/image/catalog/salat/salat-cezar.jpg" alt="Страва 1">
+            <h3>Цезар з куркою</h3>
+            <p>Листя салату, соковита курка, сухарики та пармезан.</p>
+        </div>
+
+        <div class="card">
+            <img src="https://vgorode.ua/img/article/12491/75_main-v1695288133.jpg" alt="Страва 2">
+            <h3>Фирмовый Бургер "Кінг"</h3>
+            <p>Соковита булочка,курка, сир, овочі та соус.</p>
+        </div>
+
+        <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3naOktx_6n-b6nfCSsfi8GSjSVTprztZmRQ&s" alt="Страва 3">
+            <h3>Тигрові Креветки</h3>
+            <p>Смачні тигрові креветки з соусом.</p>
+        </div>
+    </div>
+</div>
+
+<div class="map-container">
+    <h2>Наша локація</h2>
+    <!-- Google Maps с маркером на рандомное место в Днепре -->
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2590.123456789!2d35.0395!3d48.4647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dbe2b3f3f3f3f3%3A0xabcdef1234567890!2sRandom%20Place%2C%20Dnipro%2C%20Ukraine!5e0!3m2!1sen!2sua!4v1700000000000!5m2!1sen!2sua" 
+        allowfullscreen="" 
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</div>
+
+<footer>
+    © 2026 Sky Food. Ресторан у центрі Дніпра. Всі права захищені. Ми завжди раді бачити вас у нашому закладі!
+</footer>
+
+</body>
+</html>

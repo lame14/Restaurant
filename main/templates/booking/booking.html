@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table Reservation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f0f0f;
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        /* HEADER */
+        header {
+            background-color: #0f0f0f;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            color: #ffc400;
+        }
+
+        /* NAVIGATION */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px 0;
+            background-color: #0f0f0f;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #ffc400;
+            padding: 10px 20px;
+            border: 2px solid #ffc400;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #ffc400;
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        /* SECTION */
+        .section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .section h2 {
+            color: #ffc400;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        /* FORM */
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, select, textarea {
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid #ffc400;
+            background-color: #111;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #ccc;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        /* BUTTON */
+        button {
+            padding: 12px 25px;
+            background-color: #0f0f0f;
+            color: #ffc400;
+            border: 2px solid #ffc400;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        button:hover {
+            background-color: #ffc400;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+
+        .success-message {
+            color: #00ff00;   
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                width: 90%;
+            }
+            button {
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Table Reservation</h1>
+    </header>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/menu/">Menu</a>
+        <a href="/booking/">Reservation</a>
+        <a href="/reviews/">Reviews</a>
+    </nav>
+
+    <div class="section">
+        <h2>Fill out the form to make a reservation</h2>
+        <form method="post" id="booking-form">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="tel" name="phone" placeholder="Phone Number" required>
+            <input type="date" name="date" required>
+            <input type="time" name="time" required>
+            <select name="guests" required>
+                <option value="" disabled selected>Number of Guests</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5+</option>
+            </select>
+            <textarea name="comment" placeholder="Comment / Special Requests"></textarea>
+            {% if error_message %}
+                <p class="error-message">{{ error_message }}</p>
+            {% endif %}
+        </form>
+
+        {% if success %}
+            <p class="success-message">Your reservation has been accepted!</p>
+        {% endif %}
+
+        <!-- Floating button -->
+        <button type="submit" form="booking-form">Book Now</button>
+    </div>
+</body>
+</html>
